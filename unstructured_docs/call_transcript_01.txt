@@ -1,0 +1,12 @@
+METADATA | client_id: 7 | broker_id: 9 | call_date: 2025-07-09 | topic: short-term market volatility
+
+Broker: I wanted to check in after last quarter's performance.
+Client: I'm worried about rate hikes.
+Broker: We can rebalance quarterly to maintain targets.
+Client: I'm focused on long-term growth over income right now.
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed short-term market volatility in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

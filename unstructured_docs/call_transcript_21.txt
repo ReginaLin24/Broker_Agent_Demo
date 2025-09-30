@@ -1,0 +1,12 @@
+METADATA | client_id: 8 | broker_id: 24 | call_date: 2025-08-22 | topic: portfolio rebalancing
+
+Broker: I wanted to check in after last quarter's performance.
+Client: What do you think about buying Apple stock now?
+Broker: We can rebalance quarterly to maintain targets.
+Client: Should we trim Tesla after the run?
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed portfolio rebalancing in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

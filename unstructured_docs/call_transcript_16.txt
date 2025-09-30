@@ -1,0 +1,12 @@
+METADATA | client_id: 69 | broker_id: 13 | call_date: 2025-09-23 | topic: short-term market volatility
+
+Broker: Appreciate the update on your employment situation.
+Client: I'm worried about rate hikes.
+Broker: Let's keep emergency funds separate from the portfolio.
+Client: What do you think about buying Apple stock now?
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed short-term market volatility in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

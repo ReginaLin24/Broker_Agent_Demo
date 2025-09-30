@@ -1,0 +1,12 @@
+METADATA | client_id: 2 | broker_id: 12 | call_date: 2025-07-18 | topic: retirement planning
+
+Broker: Let's revisit your goals we set in January.
+Client: I'm worried about rate hikes.
+Broker: Let's keep emergency funds separate from the portfolio.
+Client: Should we trim Tesla after the run?
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed retirement planning in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

@@ -1,0 +1,12 @@
+METADATA | client_id: 61 | broker_id: 2 | call_date: 2025-09-11 | topic: dividend income focus
+
+Broker: Appreciate the update on your employment situation.
+Client: What do you think about buying Apple stock now?
+Broker: Given your moderate risk profile, we can phase in buys.
+Client: I want more tech exposure if the market pulls back.
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed dividend income focus in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

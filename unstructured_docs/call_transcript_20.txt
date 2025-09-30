@@ -1,0 +1,12 @@
+METADATA | client_id: 69 | broker_id: 11 | call_date: 2025-02-21 | topic: adding tech exposure
+
+Broker: Following up on your last email about risk tolerance.
+Client: I'm focused on long-term growth over income right now.
+Broker: We can rebalance quarterly to maintain targets.
+Client: Should we trim Tesla after the run?
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed adding tech exposure in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

@@ -1,0 +1,12 @@
+METADATA | client_id: 44 | broker_id: 3 | call_date: 2025-09-08 | topic: college savings plan
+
+Broker: Following up on your last email about risk tolerance.
+Client: What do you think about buying Apple stock now?
+Broker: Let's keep emergency funds separate from the portfolio.
+Client: Should we trim Tesla after the run?
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed college savings plan in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

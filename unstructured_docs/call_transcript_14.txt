@@ -1,0 +1,12 @@
+METADATA | client_id: 3 | broker_id: 9 | call_date: 2025-06-22 | topic: dividend income focus
+
+Broker: Thanks for taking the time today.
+Client: Should we trim Tesla after the run?
+Broker: We can rebalance quarterly to maintain targets.
+Client: I'm worried about rate hikes.
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed dividend income focus in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.

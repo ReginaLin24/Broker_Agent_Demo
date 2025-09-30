@@ -1,0 +1,12 @@
+METADATA | client_id: 73 | broker_id: 11 | call_date: 2025-07-25 | topic: long-term investment strategy
+
+Broker: Let's revisit your goals we set in January.
+Client: Should we trim Tesla after the run?
+Broker: Tax efficiency is a priority here.
+Client: I'm focused on long-term growth over income right now.
+Broker: We'll document the plan and follow up with next steps.
+
+Notes:
+- Discussed long-term investment strategy in the context of current market conditions.
+- Action items include reviewing allocation and recent transactions in tech.
+- Client emphasized liquidity needs over the next 6 months.
