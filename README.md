@@ -2,6 +2,10 @@
 
 This repository provides a turnkey demo that gives brokers a single interface to query both structured and unstructured data in Snowflake. It showcases Snowflake Intelligence with Cortex Analyst and Cortex Search, plus Git integration for automated data loading.
 
+## Architecture Diagram
+![Broker Intelligence Demo Architecture](img/LENDI%20Demo%20Diagram.png)
+
+
 ## Repository Structure
 
 - `demo_data/`
@@ -37,8 +41,7 @@ Update in `setup.sql` before running:
 2. Creates `BROKER_DEMO_DB.DEMO` schema
 3. Creates a Snowflake Git integration and repository pointing to your GitHub repo
 4. Creates tables and loads demo CSVs via `COPY INTO` from the Git stage
-5. Creates a `CLIENT_PORTFOLIO_VIEW` for natural language queries
-6. Includes commented DDL templates for:
+5. Includes commented DDL templates for:
    - A Cortex Search service over transcripts
    - A Cortex Analyst over the semantic view
    - A Snowflake Intelligence Agent orchestrating both
