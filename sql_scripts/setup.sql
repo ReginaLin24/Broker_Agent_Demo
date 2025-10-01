@@ -27,12 +27,12 @@ USE SCHEMA DEMO;
 
 CREATE OR REPLACE API INTEGRATION BROKER_DEMO_GIT_API
   API_PROVIDER = git_https_api
-  API_ALLOWED_PREFIXES = ('https://github.com/your_org/your_repo')
+  API_ALLOWED_PREFIXES = ('https://github.com/ReginaLin24')
   ENABLED = TRUE;
 
 CREATE OR REPLACE GIT REPOSITORY BROKER_DEMO_REPO
   API_INTEGRATION = BROKER_DEMO_GIT_API
-  ORIGIN = 'https://github.com/your_org/your_repo';
+  ORIGIN = 'https://github.com/ReginaLin24/Broker_Agent_Demo.git';
 
 ALTER GIT REPOSITORY BROKER_DEMO_REPO FETCH;
 
@@ -67,7 +67,7 @@ INTO @INTERNAL_DATA_STAGE/unstructured_docs/
 FROM @BROKER_DEMO_REPO/branches/main/unstructured_docs/;
 
 -- Optional verification
-LS @INTERNAL_DATA_STAGE | CAT;
+LS @INTERNAL_DATA_STAGE;
 ALTER STAGE INTERNAL_DATA_STAGE REFRESH;
 
 -- 4) Create Tables
@@ -95,7 +95,7 @@ CREATE OR REPLACE TABLE BROKER_PERFORMANCE (
 -- Optional table to land transcripts as rows (if desired by Cortex Search variant)
 CREATE OR REPLACE TABLE CALL_TRANSCRIPTS (
   FILE_NAME STRING,
-  CONTENT STRING
+  CONTENT VARCHAR
 );
 
 -- 5) Load data from Git repository stage
@@ -112,23 +112,23 @@ COPY INTO BROKER_PERFORMANCE
   FROM @INTERNAL_DATA_STAGE/demo_data/broker_performance.csv
   FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
 
--- Unstructured docs are available on stage; will be used directly by Cortex Search
+COPY INTO CALL_TRANSCRIPTS
+FROM (
+  SELECT
+    METADATA$FILENAME,
+    $1
+  FROM @INTERNAL_DATA_STAGE/unstructured_docs/
+)
+FILE_FORMAT = (
+  TYPE = 'CSV',
+  FIELD_DELIMITER = NONE,
+  RECORD_DELIMITER = NONE
+);
 
--- 6) Semantic view for structured NL queries
-CREATE OR REPLACE VIEW CLIENT_PORTFOLIO_VIEW COMMENT = 'Combines client profiles with transaction history for broker NL queries' AS
-SELECT
-  c.CLIENT_ID,
-  c.NAME,
-  c.RISK_TOLERANCE,
-  c.PORTFOLIO_VALUE,
-  t.TRANSACTION_ID,
-  t.TRANSACTION_DATE,
-  t.AMOUNT,
-  t.STOCK_TICKER
-FROM CLIENTS c
-JOIN TRANSACTIONS t ON c.CLIENT_ID = t.CLIENT_ID;
+select * from CALL_TRANSCRIPTS;
 
--- 7) Semantic View for structured NL queries (relationships, facts, dimensions, metrics)
+
+-- 6) Semantic View for structured NL queries (relationships, facts, dimensions, metrics)
 -- Requires accounts with SEMANTIC VIEW support
 CREATE OR REPLACE SEMANTIC VIEW BROKER_SEMANTIC_VIEW
   TABLES (
@@ -144,18 +144,18 @@ CREATE OR REPLACE SEMANTIC VIEW BROKER_SEMANTIC_VIEW
     TRANSACTIONS.TX_COUNT AS 1 COMMENT='Transaction count'
   )
   DIMENSIONS (
-    CLIENTS.NAME AS client_name WITH SYNONYMS=('name','client'),
+    CLIENTS.NAME AS name WITH SYNONYMS=('name','client'),
     CLIENTS.RISK_TOLERANCE AS risk_tolerance,
     CLIENTS.PORTFOLIO_VALUE AS portfolio_value,
-    TRANSACTIONS.TRANSACTION_DATE AS date WITH SYNONYMS=('date','trade date'),
+    TRANSACTIONS.TRANSACTION_DATE AS transaction_date WITH SYNONYMS=('date','trade date'),
     TRANSACTIONS.STOCK_TICKER AS stock_ticker,
     BROKERS.NUMBER_OF_CLIENTS AS number_of_clients,
-    BROKERS.TOTAL_ASSETS_UNDER_MANAGEMENT AS aum
+    BROKERS.TOTAL_ASSETS_UNDER_MANAGEMENT AS total_assets_under_management
   )
   METRICS (
-    TRANSACTIONS.TOTAL_AMOUNT AS SUM(transactions.amount) COMMENT='Total transacted amount',
-    TRANSACTIONS.TOTAL_TRANSACTIONS AS COUNT(transactions.tx_count) COMMENT='Number of transactions',
-    TRANSACTIONS.AVG_TRADE_AMOUNT AS AVG(transactions.amount) COMMENT='Average trade size'
+    TRANSACTIONS.TOTAL_AMOUNT AS SUM(amount) COMMENT='Total transacted amount',
+    TRANSACTIONS.TOTAL_TRANSACTIONS AS COUNT(tx_count) COMMENT='Number of transactions',
+    TRANSACTIONS.AVG_TRADE_AMOUNT AS AVG(amount) COMMENT='Average trade size'
   )
   COMMENT='Semantic model joining clients, transactions and broker KPIs for NL analytics';
 
@@ -163,9 +163,10 @@ CREATE OR REPLACE SEMANTIC VIEW BROKER_SEMANTIC_VIEW
 -- If supported in your account:
 -- Creates a semantic search index over TXT transcripts in @INTERNAL_DATA_STAGE/unstructured_docs/
 CREATE OR REPLACE CORTEX SEARCH SERVICE BROKER_CALL_SEARCH
-  ON STAGE @INTERNAL_DATA_STAGE/unstructured_docs/
-  FILE_FORMAT = (TYPE = 'TEXT')
-  WAREHOUSE = BROKER_DEMO_WH;
+  ON CONTENT
+  WAREHOUSE = BROKER_DEMO_WH
+  TARGET_LAG = "7 day"
+  AS SELECT * FROM CALL_TRANSCRIPTS;
 
 -- 9) Snowflake Intelligence Agent orchestrating semantic SQL and search
 -- Ensure the Snowflake Intelligence config database exists
@@ -176,6 +177,7 @@ GRANT USAGE ON SCHEMA snowflake_intelligence.agents TO ROLE PUBLIC;
 
 CREATE OR REPLACE AGENT snowflake_intelligence.agents.BROKER_DEMO_AGENT
 WITH PROFILE='{ "display_name": "Broker Intelligence Agent" }'
+COMMENT='Primary interface for unified broker intelligence across structured and unstructured data.'
 FROM SPECIFICATION $$
 {
   "instructions": {
@@ -196,8 +198,7 @@ FROM SPECIFICATION $$
     "Search Call Transcripts": { "name": "BROKER_DEMO_DB.DEMO.BROKER_CALL_SEARCH", "max_results": 10 }
   }
 }
-$$
-COMMENT='Primary interface for unified broker intelligence across structured and unstructured data.';
+$$;
 
 -- Notes:
 -- - The exact DDL for Cortex objects may differ based on Snowflake release. If CREATE ... statements fail, consult Snowflake docs for your account's current syntax and adjust.

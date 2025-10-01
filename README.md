@@ -1,4 +1,4 @@
-# Snowflake Intelligence Demo for Brokers
+# Snowflake Broker Intelligence 📞
 
 This repository provides a turnkey demo that gives brokers a single interface to query both structured and unstructured data in Snowflake. It showcases Snowflake Intelligence with Cortex Analyst and Cortex Search, plus Git integration for automated data loading.
 
